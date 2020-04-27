@@ -1,1 +1,1 @@
-pierwszy wpis
+pierwszy wpis i modyfikacja z branch_conflict_2.
