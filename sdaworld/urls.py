@@ -17,6 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 from courses.views import hello
+from courses.models import Technology, Course
+
+
+admin.site.register(Technology)
+admin.site.register(Course)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

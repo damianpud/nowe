@@ -1,13 +1,22 @@
-from django.db import models
-from django.db.models import CharField, Model, IntegerField, TextField, DateField
+from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey, DO_NOTHING
 
 
-class Courses(Model):
-    name = CharField(max_length=128)
-    hours = IntegerField()
-    price = IntegerField()
-    description = TextField()
-    start = DateField()
+class Technology(Model):
+    name = CharField(max_length=32)
 
     def __str__(self):
         return self.name
+
+
+class Course(Model):
+    title = CharField(max_length=128)
+    tech = ForeignKey(Technology, on_delete=DO_NOTHING)
+    description = TextField()
+    starts = DateField()
+    finishes = DateField()
+    max_student_counts = IntegerField()
+    price = IntegerField()
+    remote = BooleanField
+
+    def __str__(self):
+        return self.title
