@@ -25,5 +25,5 @@ admin.site.register(Course)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', hello, name='Index')
+    path('', hello, name='index')
 ]

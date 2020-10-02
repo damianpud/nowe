@@ -14,9 +14,9 @@ class Course(Model):
     description = TextField()
     starts = DateField()
     finishes = DateField()
-    max_student_counts = IntegerField()
+    max_atendees_counts = IntegerField()
     price = IntegerField()
-    remote = BooleanField
+    remote = BooleanField()
 
     def __str__(self):
         return self.title
