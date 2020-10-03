@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1>Witaj w swiecie kursow SDA!</h1>
+    <ul>
+        {% for course in courses %}
+        <li>
+            {{course.title}} {{course.price}} {{course.tech}}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
