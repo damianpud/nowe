@@ -16,9 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from courses.views import hello
 from courses.models import Technology, Course
-from courses import views
 from courses.views import CourseCreateView, CourseView
 
 

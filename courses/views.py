@@ -1,14 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, CreateView
 from django.views import View
+from django.urls import reverse_lazy
 
 from courses.models import Course
 from courses.forms import CourseForm
-
-
-def hello(request):
-    return render(request, template_name='hello.html')
 
 
 def courses(request):
@@ -26,6 +22,9 @@ class CourseView(View):
         )
 
 
-class CourseCreateView(FormView):
+class CourseCreateView(CreateView):
     template_name = 'form.html'
     form_class = CourseForm
+    success_url = reverse_lazy('index')
+
+
