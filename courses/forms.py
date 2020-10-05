@@ -10,6 +10,11 @@ from crispy_forms.layout import Column, Layout, Row, Submit
 from courses.models import Technology, Course
 
 
+def capitalized_validator(value):
+    if value[0].islower():
+        raise ValidationError('Value must be capitalized.')
+
+
 class FutureMonthField(DateField):
 
     def validate(self, value):
@@ -41,13 +46,13 @@ class CourseForm(ModelForm):
         fields = '__all__'
         exclude = ['max_atendees_counts']
 
-    title = ModelChoiceField(queryset=Course.objects)
+    title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
     description = CharField(widget=Textarea, required=False)
     starts = FutureMonthField()
     finishes = FutureMonthField()
-    max_attendees_counts = IntegerField()
-    price = FloatField(min_value=5, max_value=30)
+    max_attendees_counts = IntegerField(min_value=5, max_value=30)
+    price = FloatField()
     remote = BooleanField(required=False)
 
     def clean_description(self):
