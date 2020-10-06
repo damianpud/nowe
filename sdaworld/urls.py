@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path
 
 from courses.models import Technology, Course
-from courses.views import CourseCreateView, CourseView
+from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
+    CourseView, CourseListView
 
 
 admin.site.register(Technology)
@@ -26,5 +27,9 @@ admin.site.register(Course)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', CourseView.as_view(), name='index'),
-    path('course/create', CourseCreateView.as_view(), name='course_create')
+    path('course/list', CourseListView.as_view(), name='course_list'),
+    path('course/create', CourseCreateView.as_view(), name='course_create'),
+    path('course/update/<pk>', CourseUpdateView.as_view(), name='course_update'),
+    path('course/delete/<pk>', CourseDeleteView.as_view(), name='course_delete'),
+    path('course/detail/<pk>', CourseDetailView.as_view(), name='course_detail')
 ]

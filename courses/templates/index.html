@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
+{% load course_extra %}
+
 {% block content %}
     <h1>Witaj w swiecie kursow SDA!</h1>
     <ul>
         {% for course in object_list %}
-        <li>
-            {{course.title}} {{course.tech}} price - {{course.price}} PLN  START {{course.starts}}
-        </li>
+        <li>{% course_format course %}</li>
         {% endfor %}
     </ul>
 {% endblock %}

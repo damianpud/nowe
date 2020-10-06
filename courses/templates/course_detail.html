@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% load course_extra %}
+
+{% block content %}
+  {{ course|attr_as_p:'title' }}
+  {{ course|attr_as_p:'tech' }}
+  {{ course|attr_as_p:'price' }}
+  {{ course|attr_as_p:'starts' }}
+  {{ course|attr_as_p:'description' }}
+{% endblock %}
