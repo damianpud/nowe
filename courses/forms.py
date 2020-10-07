@@ -5,7 +5,8 @@ from django.forms import CharField, DateField, IntegerField, FloatField, ModelCh
 from django.core.exceptions import ValidationError
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Layout, Row, Submit
+from crispy_forms.layout import Column, Layout, Row, Submit, Button
+from crispy_forms.bootstrap import StrictButton
 
 from courses.models import Technology, Course
 
@@ -33,11 +34,24 @@ class CourseForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            Row(Column('title'), Column('technology')),
+            Row(
+                Column('title'),
+                Column('technology')
+            ),
             'description',
-            Row(Column('starts'), Column('finishes'), Column('remote')),
-            Row(Column('max_attendees_counts'), Column('price')),
-            Submit('submit', 'Submit')
+            Row(
+                Column('starts'),
+                Column('finishes'),
+                Column('remote')
+            ),
+            Row(
+                Column('max_attendees_counts'),
+                Column('price')
+            ),
+            Row(
+                Submit('submit', 'Dodaj kurs', css_class="btn-success"),
+                Button('cancel', 'Anuluj', css_class="btn-outline-danger")
+            ),
         )
 
     class Meta:

@@ -8,6 +8,9 @@
         <p>
             Are you sure you want to delete course "{{ object.title }}" from database?
         </p>
-        <input type="submit" value="Submit" class="btn btn-danger">
+        <input type="submit" value="Submit" class="btn btn-outline-danger">
+        <a class="btn btn-outline-success" type="button" href="{% url 'index' %}">
+            Cancel
+        </a>
     </form>
 {% endblock %}
