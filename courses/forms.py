@@ -33,11 +33,10 @@ class CourseForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            'title',
-            Row(Column('technology'), Column('starts'), Column('finishes'), Column('max_attendees_counts')),
+            Row(Column('title'), Column('technology')),
             'description',
-            'price',
-            'remote',
+            Row(Column('starts'), Column('finishes'), Column('remote')),
+            Row(Column('max_attendees_counts'), Column('price')),
             Submit('submit', 'Submit')
         )
 
