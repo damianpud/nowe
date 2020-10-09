@@ -3,6 +3,7 @@ from datetime import date
 
 from django.forms import CharField, DateField, IntegerField, FloatField, ModelChoiceField, Textarea, BooleanField, ModelForm
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Layout, Row, Submit, Button
@@ -80,3 +81,10 @@ class CourseForm(ModelForm):
         cleaned = round(initial, 2)
         self.cleaned_data['price'] = cleaned
         return cleaned
+
+
+class SubmittableAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper
+        self.helper.layout = Layout(*self.fields, Submit('submit', 'Submit'))
