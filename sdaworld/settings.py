@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'courses',
     'bootstrap4',
     'crispy_forms',
+    'accounts'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

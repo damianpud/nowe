@@ -37,10 +37,6 @@ class CourseCreateView(CreateView):
     form_class = CourseForm
     success_url = reverse_lazy('index')
 
-    def form_invalid(self, form):
-        LOGGER.warning('User provided invalid data while creating a movie')
-        return super().form_invalid(form)
-
 
 class CourseUpdateView(UpdateView):
     template_name = 'form.html'
@@ -48,13 +44,8 @@ class CourseUpdateView(UpdateView):
     form_class = CourseForm
     success_url = reverse_lazy('index')
 
-    def form_invalid(self, form):
-        LOGGER.warning('User provided invalid data while updating a movie')
-        return super().form_invalid(form)
-
 
 class CourseDeleteView(DeleteView):
-
     template_name = 'course_confirm_delete.html'
     model = Course
     success_url = reverse_lazy('index')
