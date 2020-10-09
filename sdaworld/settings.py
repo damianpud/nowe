@@ -60,7 +60,7 @@ ROOT_URLCONF = 'sdaworld.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join('sdaworld', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

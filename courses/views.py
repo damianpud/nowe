@@ -1,11 +1,10 @@
+from courses.models import Course
+from courses.forms import CourseForm
+
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
-
-from courses.models import Course
-from courses.forms import CourseForm, SubmittableAuthenticationForm
 
 
 def courses(request):
@@ -48,7 +47,3 @@ class CourseDeleteView(LoginRequiredMixin, DeleteView):
     model = Course
     success_url = reverse_lazy('index')
 
-
-class SubmittableLoginView(LoginView):
-    form_class = SubmittableAuthenticationForm
-    template_name = 'form.html'

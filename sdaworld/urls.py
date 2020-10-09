@@ -15,20 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth.views import LoginView
 
 from courses.models import Technology, Course
 from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
-    CourseView, CourseListView, SubmittableLoginView
-
+    CourseListView
+from accounts.views import SubmittableLoginView
+from sdaworld.views import IndexView
 
 admin.site.register(Technology)
 admin.site.register(Course)
 
 urlpatterns = [
+    path('accounts/login', SubmittableLoginView.as_view(), name='login'),
     path('admin/', admin.site.urls),
-    path('accounts/login', SubmittableLoginView.as_view, name='login'),
-    path('', CourseView.as_view(), name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('course/list', CourseListView.as_view(), name='course_list'),
     path('course/create', CourseCreateView.as_view(), name='course_create'),
     path('course/update/<pk>', CourseUpdateView.as_view(), name='course_update'),
