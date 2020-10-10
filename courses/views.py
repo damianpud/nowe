@@ -1,6 +1,8 @@
 from courses.models import Course
 from courses.forms import CourseForm
 
+from sdaworld.mixins import TitleMixin
+
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
@@ -19,12 +21,14 @@ class CourseView(ListView):
     model = Course
 
 
-class CourseListView(ListView):
+class CourseListView(TitleMixin, ListView):
+    title = 'Lista kursow'
     template_name = 'course_list.html'
     model = Course
 
 
-class CourseDetailView(DetailView):
+class CourseDetailView(TitleMixin, DetailView):
+    title = 'Szczegóły'
     template_name = 'course_detail.html'
     model = Course
 
@@ -42,7 +46,8 @@ class CourseUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('index')
 
 
-class CourseDeleteView(LoginRequiredMixin, DeleteView):
+class CourseDeleteView(TitleMixin, LoginRequiredMixin, DeleteView):
+    title = 'Potwierdz usuniecie kursu'
     template_name = 'course_confirm_delete.html'
     model = Course
     success_url = reverse_lazy('index')
