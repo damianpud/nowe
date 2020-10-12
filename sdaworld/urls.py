@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
 
 from courses.models import Technology, Course
 from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
     CourseListView
+
 from accounts.views import SubmittableLoginView
 from sdaworld.views import IndexView
 
@@ -26,12 +30,14 @@ admin.site.register(Technology)
 admin.site.register(Course)
 
 urlpatterns = [
-    path('accounts/login', SubmittableLoginView.as_view(), name='login'),
+    path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('course/list', CourseListView.as_view(), name='course_list'),
     path('course/create', CourseCreateView.as_view(), name='course_create'),
     path('course/update/<pk>', CourseUpdateView.as_view(), name='course_update'),
     path('course/delete/<pk>', CourseDeleteView.as_view(), name='course_delete'),
-    path('course/detail/<pk>', CourseDetailView.as_view(), name='course_detail')
+    path('course/detail/<pk>', CourseDetailView.as_view(), name='course_detail'),
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

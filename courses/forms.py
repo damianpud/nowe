@@ -44,7 +44,7 @@ class CourseForm(ModelForm):
                 Column('remote')
             ),
             Row(
-                Column('max_attendees_counts'),
+                Column('max_atendees_counts'),
                 Column('price')
             ),
             Row(
@@ -55,14 +55,14 @@ class CourseForm(ModelForm):
 
     class Meta:
         model = Course
-        exclude = ['max_atendees_counts']
+        exclude = []
 
     title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
     description = CharField(widget=Textarea, required=False)
     starts = FutureMonthField()
     finishes = FutureMonthField()
-    max_attendees_counts = IntegerField(min_value=5, max_value=30)
+    max_atendees_counts = IntegerField(min_value=5, max_value=30)
     price = FloatField()
     remote = BooleanField(required=False)
 

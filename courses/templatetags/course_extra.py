@@ -8,8 +8,8 @@ register = Library()
 @register.simple_tag
 def course_format(course, short=False):
     if short:
-        return f'{course.title} ({course.tech})'
-    return f'{course.title} ({course.tech}) - {course.price}'
+        return f'{course.title} ({course.technology})'
+    return f'{course.title} ({course.technology}) - {course.price}'
 
 
 @register.filter

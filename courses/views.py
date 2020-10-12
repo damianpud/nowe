@@ -25,6 +25,7 @@ class CourseListView(TitleMixin, ListView):
     title = 'Lista kursow'
     template_name = 'course_list.html'
     model = Course
+    paginate_by = 20
 
 
 class CourseDetailView(TitleMixin, DetailView):
@@ -51,4 +52,3 @@ class CourseDeleteView(TitleMixin, LoginRequiredMixin, DeleteView):
     template_name = 'course_confirm_delete.html'
     model = Course
     success_url = reverse_lazy('index')
-

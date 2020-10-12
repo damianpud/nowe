@@ -10,7 +10,7 @@ class Technology(Model):
 
 class Course(Model):
     title = CharField(max_length=128)
-    tech = ForeignKey(Technology, on_delete=DO_NOTHING)
+    technology = ForeignKey(Technology, on_delete=DO_NOTHING)
     description = TextField(null=True, blank=True)
     starts = DateField()
     finishes = DateField()
