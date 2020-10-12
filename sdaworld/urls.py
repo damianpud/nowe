@@ -23,7 +23,7 @@ from courses.models import Technology, Course
 from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
     CourseListView
 
-from accounts.views import SubmittableLoginView
+from accounts.views import SubmittableLoginView, SubmittablePasswordChangeView
 from sdaworld.views import IndexView
 
 admin.site.register(Technology)
@@ -32,6 +32,10 @@ admin.site.register(Course)
 urlpatterns = [
     path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path(
+        'password-chnage/', SubmittablePasswordChangeView.as_view(),
+        name='password_change'
+    ),
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('course/list', CourseListView.as_view(), name='course_list'),
