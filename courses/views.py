@@ -34,13 +34,15 @@ class CourseDetailView(TitleMixin, DetailView):
     model = Course
 
 
-class CourseCreateView(LoginRequiredMixin, CreateView):
+class CourseCreateView(TitleMixin, LoginRequiredMixin, CreateView):
+    title = 'Create course'
     template_name = 'form.html'
     form_class = CourseForm
     success_url = reverse_lazy('index')
 
 
-class CourseUpdateView(LoginRequiredMixin, UpdateView):
+class CourseUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
+    title = 'Update course'
     template_name = 'form.html'
     model = Course
     form_class = CourseForm
