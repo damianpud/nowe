@@ -14,34 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LogoutView
 
 from courses.models import Technology, Course
-from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
-    CourseListView
 
-from accounts.views import SubmittableLoginView, SubmittablePasswordChangeView, SuccessMessagedLogoutView
 from sdaworld.views import IndexView
 
 admin.site.register(Technology)
 admin.site.register(Course)
 
 urlpatterns = [
-    path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
-    path('accounts/logout/', SuccessMessagedLogoutView.as_view(), name='logout'),
-    path(
-        'password-chnage/', SubmittablePasswordChangeView.as_view(),
-        name='password_change'
-    ),
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
-    path('course/list', CourseListView.as_view(), name='course_list'),
-    path('course/create', CourseCreateView.as_view(), name='course_create'),
-    path('course/update/<pk>', CourseUpdateView.as_view(), name='course_update'),
-    path('course/delete/<pk>', CourseDeleteView.as_view(), name='course_delete'),
-    path('course/detail/<pk>', CourseDetailView.as_view(), name='course_detail'),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('courses/', include('courses.urls', namespace='courses')),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

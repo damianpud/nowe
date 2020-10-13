@@ -7,9 +7,9 @@
     {% for course in object_list %}
       <li>
         {% course_format course short=True %}
-        <a href="{% url 'course_detail' course.pk %}">detail</a> /
-        <a href="{% url 'course_update' course.pk %}">update</a> /
-        <a href="{% url 'course_delete' course.pk %}">delete</a>
+        <a href="{% url 'courses:course_detail' course.pk %}">detail</a> /
+        <a href="{% url 'courses:course_update' course.pk %}">update</a> /
+        <a href="{% url 'courses:course_delete' course.pk %}">delete</a>
       </li>
     {% endfor %}
   </ul>
