@@ -3,9 +3,8 @@
 {% load course_extra %}
 
 {% block content %}
-    <h1>Witaj w swiecie kursow SDA!</h1>
     <ul>
-        {% for course in object_list %}
+        {% for course in page_obj %}
         <li>{% course_format course %}</li>
         {% endfor %}
     </ul>
