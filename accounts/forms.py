@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.layout import Submit
 
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.forms import Form
 
 
@@ -20,3 +20,11 @@ class SubmittablePasswordChangeForm(SubmittableForm, PasswordChangeForm):
     pass
 
 
+class SignUpForm(SubmittableForm, UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        fields = ['username', 'first_name']
+
+    def save(self, commit=True):
+        self.instance.is_active = False
+        return super().save(commit)
