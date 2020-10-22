@@ -25,7 +25,7 @@ class CourseListView(TitleMixin, ListView):
     title = 'Courses list'
     template_name = 'course_list.html'
     model = Course
-    paginate_by = 20
+    paginate_by = 5
 
 
 class CourseDetailView(TitleMixin, DetailView):
