@@ -9,6 +9,13 @@ from crispy_forms.layout import Column, Layout, Row, Submit, Button
 
 from courses.models import Technology, Course
 
+import math
+
+
+def truncate(number, digits):
+    stepper = 10.0 ** digits
+    return math.trunc(stepper * number) / stepper
+
 
 def capitalized_validator(value):
     if value[0].islower():
@@ -73,10 +80,10 @@ class CourseForm(ModelForm):
         self.cleaned_data['description'] = cleaned
         return cleaned
 
-    # def clean_price(self):
-    #     initial = self.cleaned_data['price']
-    #     cleaned = round(initial, 2)
-    #     self.cleaned_data['price'] = cleaned
-    #     return cleaned
+    def clean_price(self):
+        initial = self.cleaned_data['price']
+        cleaned = truncate(initial, 2)
+        self.cleaned_data['price'] = cleaned
+        return cleaned
 
 

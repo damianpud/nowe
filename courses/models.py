@@ -1,4 +1,5 @@
-from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey, DO_NOTHING
+from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey,\
+    DO_NOTHING, FloatField
 
 
 class Technology(Model):
@@ -15,7 +16,7 @@ class Course(Model):
     starts = DateField()
     finishes = DateField()
     max_atendees_counts = IntegerField()
-    price = IntegerField()
+    price = FloatField()
     remote = BooleanField()
 
     def __str__(self):
