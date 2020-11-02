@@ -44,7 +44,7 @@ class CourseForm(ModelForm):
                 Column('title'),
                 Column('technology')
             ),
-            'description', 'poster',
+            'description', 'file',
             Row(
                 Column('starts'),
                 Column('finishes'),

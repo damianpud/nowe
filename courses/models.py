@@ -1,5 +1,5 @@
 from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey,\
-    DO_NOTHING, FloatField, ImageField
+    DO_NOTHING, FloatField, FileField
 
 
 class Technology(Model):
@@ -17,7 +17,7 @@ class Course(Model):
     finishes = DateField()
     max_atendees_counts = IntegerField()
     price = FloatField()
-    poster = ImageField(null=True, blank=True)
+    file = FileField(null=True, blank=True)
     remote = BooleanField()
 
     def __str__(self):
