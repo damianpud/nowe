@@ -1,7 +1,8 @@
 import re
 from datetime import date
 
-from django.forms import CharField, DateField, IntegerField, FloatField, ModelChoiceField, Textarea, BooleanField, ModelForm
+from django.forms import CharField, DateField, IntegerField, FloatField, ModelChoiceField, Textarea, BooleanField,\
+    ModelForm, FileField
 from django.core.exceptions import ValidationError
 
 from crispy_forms.helper import FormHelper
@@ -10,6 +11,7 @@ from crispy_forms.layout import Column, Layout, Row, Submit, Button
 from courses.models import Technology, Course
 
 import math
+from pathlib import Path
 
 
 def truncate(number, digits):
@@ -20,6 +22,11 @@ def truncate(number, digits):
 def capitalized_validator(value):
     if value[0].islower():
         raise ValidationError('Value must be capitalized.')
+
+
+def extension_file_validator(file):
+    if Path(str(file)).suffix != '.txt':
+        raise ValidationError('File must be txt or pdf')
 
 
 class FutureMonthField(DateField):
@@ -67,6 +74,7 @@ class CourseForm(ModelForm):
     title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
     description = CharField(widget=Textarea, required=False)
+    file = FileField(validators=[extension_file_validator])
     starts = FutureMonthField()
     finishes = FutureMonthField()
     max_atendees_counts = IntegerField(min_value=5, max_value=30)
