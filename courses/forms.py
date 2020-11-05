@@ -26,7 +26,7 @@ def capitalized_validator(value):
 
 def extension_file_validator(file):
     if Path(str(file)).suffix != '.txt':
-        raise ValidationError('File must be txt or pdf')
+        raise ValidationError('File must be txt')
 
 
 class FutureMonthField(DateField):
