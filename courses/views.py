@@ -1,7 +1,10 @@
-from courses.models import Course
+from courses.models import Course, Technology
 from courses.forms import CourseForm
+from courses.serializers import TechnologySerializer
 
 from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
+
+from rest_framework.viewsets import ModelViewSet
 
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -17,6 +20,11 @@ def courses(request):
         request, template_name='courses.html',
         context={'courses': Course.objects.all().order_by('price')}
     )
+
+
+class TechnologyViewSet(ModelViewSet):
+    queryset = Technology.objects
+    serializer_class = TechnologySerializer
 
 
 class CourseView(ListView):
