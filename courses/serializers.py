@@ -1,6 +1,6 @@
 from rest_framework.serializers import HyperlinkedIdentityField, ModelSerializer
 
-from courses.models import Technology
+from courses.models import Technology, Course
 
 
 class TechnologySerializer(ModelSerializer):
@@ -11,3 +11,11 @@ class TechnologySerializer(ModelSerializer):
         model = Technology
         exclude = []
 
+
+class CourseSerializer(ModelSerializer):
+
+    url = HyperlinkedIdentityField(view_name='courses:course-detail')
+
+    class Meta:
+        model = Course
+        exclude = []

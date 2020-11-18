@@ -3,10 +3,11 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
-    CourseListView, TechnologyViewSet
+    CourseListView, TechnologyViewSet, CourseViewSet
 
 router = DefaultRouter()
 router.register('technology', TechnologyViewSet)
+router.register('course', CourseViewSet)
 
 app_name = 'courses'
 urlpatterns = [

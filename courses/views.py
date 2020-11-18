@@ -1,6 +1,6 @@
 from courses.models import Course, Technology
 from courses.forms import CourseForm
-from courses.serializers import TechnologySerializer
+from courses.serializers import TechnologySerializer, CourseSerializer
 
 from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
 
@@ -25,6 +25,11 @@ def courses(request):
 class TechnologyViewSet(ModelViewSet):
     queryset = Technology.objects
     serializer_class = TechnologySerializer
+
+
+class CourseViewSet(ModelViewSet):
+    queryset = Course.objects
+    serializer_class = CourseSerializer
 
 
 class CourseView(ListView):
