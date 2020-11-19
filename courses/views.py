@@ -5,6 +5,7 @@ from courses.serializers import TechnologySerializer, CourseSerializer, CourseSh
 from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
 
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.pagination import PageNumberPagination
 
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -28,8 +29,13 @@ class TechnologyViewSet(ModelViewSet):
 
 
 class CourseViewSet(ModelViewSet):
-    queryset = Course.objects
+    queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+    class pagination_class(PageNumberPagination):
+        page_query_param = 'p'
+        page_size = 10
+        page_size_query_param = 'per_page'
 
     def get_serializer_class(self):
         if self.action == 'list':
