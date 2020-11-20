@@ -28,12 +28,12 @@ def courses(request):
 class TechnologyViewSet(ModelViewSet):
     queryset = Technology.objects
     serializer_class = TechnologySerializer
+    renderer_classes = APIView.renderer_classes + [XMLRenderer]
 
 
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    renderer_classes = APIView.renderer_classes + [XMLRenderer]
 
     class pagination_class(PageNumberPagination):
         page_query_param = 'p'
