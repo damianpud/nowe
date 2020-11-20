@@ -6,6 +6,8 @@ from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
+from rest_framework_xml.renderers import XMLRenderer
 
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -31,6 +33,7 @@ class TechnologyViewSet(ModelViewSet):
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    renderer_classes = APIView.renderer_classes + [XMLRenderer]
 
     class pagination_class(PageNumberPagination):
         page_query_param = 'p'
