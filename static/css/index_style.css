@@ -1,3 +1,12 @@
 body {
-    background-color: dimgrey;
+    background-color: white;
+}
+
+img {
+    height:100px;
+    width:150px;
+}
+
+a {
+    color: black;
 }
