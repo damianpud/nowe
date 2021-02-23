@@ -64,7 +64,8 @@
     <div class="container">
       <div class="jumbotron">
         {% block title %}
-          {% if title %}<h1>{{ title }}</h1>{% endif %}
+          {% if title %}<h1 style="text-align:center;">{{ title }}</h1>{% endif %}
+          <p></p>
         {% endblock %}
         {% block messages %}
           {% for message in messages %}
