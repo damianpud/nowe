@@ -3,10 +3,30 @@
 {% load course_extra %}
 
 {% block content %}
-  {{ course|attr_as_p:'title' }}
-  {{ course|attr_as_p:'technology' }}
-  {{ course|attr_as_p:'price' }}
-  {{ course|attr_as_p:'starts' }}
-  {{ course|attr_as_p:'description' }}
-  {{ course|attr_as_p:'file' }}
+  <div class="row">
+      {% if course.image %}
+      <div class="col-xl-6">
+        <img src="{{ course.image.url }}" style="height:350px;max-width:500px;"/>
+      </div>
+      {% else %}
+      <div class="col-xl-6">
+        <img src="/media/empty.jpg" style="height:350px;max-width:500px;"/>
+      </div>
+      {% endif %}
+      <div class="col">
+        {{ course|attr_as_p:'title' }}
+        {{ course|attr_as_p:'technology' }}
+        {{ course|attr_as_p:'price' }}
+        {{ course|attr_as_p:'starts' }}
+        {{ course|attr_as_p:'file' }}
+      </div>
+  </div>
+  <p></p>
+  <div class="row">
+    <div class="col-xl-1"></div>
+    <div class="col">
+      {{ course|attr_as_p:'description' }}
+    </div>
+    <div class="col-xl-1"></div>
+  </div>
 {% endblock %}
