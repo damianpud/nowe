@@ -51,7 +51,7 @@ class CourseForm(ModelForm):
                 Column('title'),
                 Column('technology')
             ),
-            'description', 'file',
+            'description', 'file', 'image',
             Row(
                 Column('starts'),
                 Column('finishes'),
