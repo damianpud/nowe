@@ -1,5 +1,5 @@
 from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey,\
-    DO_NOTHING, FloatField, FileField
+    DO_NOTHING, FloatField, FileField, ImageField
 
 
 class Technology(Model):
@@ -19,6 +19,7 @@ class Course(Model):
     price = FloatField()
     file = FileField(null=True, blank=True)
     remote = BooleanField()
+    image = ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.title
