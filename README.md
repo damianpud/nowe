@@ -1,0 +1,1 @@
+Exercise with Django & Django Rest Framework
