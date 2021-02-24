@@ -74,7 +74,7 @@ class CourseForm(ModelForm):
     title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
     description = CharField(widget=Textarea, required=False)
-    file = FileField(validators=[extension_file_validator])
+    file = FileField(validators=[extension_file_validator], required=False)
     starts = FutureMonthField()
     finishes = FutureMonthField()
     max_atendees_counts = IntegerField(min_value=5, max_value=30)
