@@ -18,12 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from courses.models import Technology, Course
-
 from sdaworld.views import IndexView
-
-admin.site.register(Technology)
-admin.site.register(Course)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
