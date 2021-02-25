@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
@@ -39,6 +40,13 @@ class SignUpView(TitleMixin, SuccessMessagedFormMixin, CreateView):
     form_class = SignUpForm
     template_name = 'form.html'
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        result = super(SignUpView, self).form_valid(form)
+        cd = form.cleaned_data
+        user = authenticate(username=cd['username'], password=cd['password1'])
+        login(self.request, user)
+        return result
 
 
 class ProfileView(TitleMixin, TemplateView):
