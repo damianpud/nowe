@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="row">
+    {% if user.profile.image %}
+    <div class="col-xs-6 col-md-5 col-xl-4">
+      <img src="{{ user.profile.image.url }}" style="height:300px;max-width:250px;"/>
+    </div>
+    {% else %}
+    <div class="col-6 col-md-6 col-xl-4">
+      <img src="/media/empty.jpg" style="height:300px;width:250px;"/>
+    </div>
+    {% endif %}
+    <div class="col">
+      <p><b>Name:</b> {{ user.username.capitalize }}</p>
+      <p><b>Last login:</b> {{ user.last_login }}</p>
+      <p><b>Email:</b> {{ user.email }}</p>
+      <p><b>Joined:</b> {{ user.date_joined }}</p>
+      <p><b>Your story:</b> {{ user.profile.biography}}</p>
+    </div>
+  </div>
+  <p></p>
+  <p style="text-align:center"><b>Your courses</b></p>
+  <p></p>
+  <div class="row">
+    <div class="col"></div>
+  </div>
+
+{% endblock %}
