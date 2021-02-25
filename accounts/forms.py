@@ -2,7 +2,7 @@ from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.layout import Submit
 
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
-from django.forms import Form, CharField, Textarea
+from django.forms import Form, CharField, Textarea, ImageField, EmailField
 from django.db.transaction import atomic
 
 from accounts.models import Profile
@@ -26,18 +26,19 @@ class SubmittablePasswordChangeForm(SubmittableForm, PasswordChangeForm):
 class SignUpForm(SubmittableForm, UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
-        fields = ['username', 'first_name']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
-    biography = CharField(
-        label='Tell us your story with courses', widget=Textarea, max_length=250
-    )
+    email = EmailField(required=True)
+    biography = CharField(label='Tell us your story with courses', widget=Textarea, max_length=250, required=False)
+    image = ImageField(required=False)
 
     @atomic
     def save(self, commit=True):
         self.instance.is_active = True
         result = super().save(commit)
         biography = self.cleaned_data['biography']
-        profile = Profile(biography=biography, user=result)
+        image = self.cleaned_data['image']
+        profile = Profile(biography=biography, image=image, user=result)
         if commit:
             profile.save()
         return result
