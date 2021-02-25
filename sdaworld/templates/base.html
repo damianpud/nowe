@@ -44,6 +44,7 @@
                   {% else %}Hello, {{ user.username }}!{% endif %}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item text-right" href="{% url 'accounts:profile' %}">Profile</a>
                   <a class="dropdown-item text-right" href="{% url 'accounts:logout' %}">Logout</a>
                   <a class="dropdown-item text-right" href="{% url 'accounts:password_change' %}">Change password</a>
                 </div>
