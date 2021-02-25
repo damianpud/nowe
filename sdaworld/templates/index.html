@@ -13,22 +13,22 @@
   {% for course in page_obj %}
   <div class="row">
       {% if course.image %}
-      <a href="{% url 'courses:course_detail' course.pk %}">
+      <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
       <div class="col-6 col-md-3 col-lg-2">
-        <img src="{{ course.image.url }}"/>
+        <img src="{{ course.image.url }}" class="rounded"/>
         <p></p>
       </div>
       </a>
       {% else %}
-      <a href="{% url 'courses:course_detail' course.pk %}">
+      <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
       <div class="col-6 col-md-3 col-lg-2">
-        <img src="/media/empty.jpg"/>
+        <img src="/media/empty.jpg" class="rounded"/>
         <p></p>
       </div>
       </a>
       {% endif %}
       <div class="col">
-        <a href="{% url 'courses:course_detail' course.pk %}">
+        <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
         {% course_format course %}
         </a>
       </div>

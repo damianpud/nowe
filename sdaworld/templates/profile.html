@@ -5,11 +5,11 @@
   <div class="row">
     {% if user.profile.image %}
     <div class="col-xs-6 col-md-5 col-xl-4">
-      <img src="{{ user.profile.image.url }}" style="height:300px;max-width:250px;"/>
+      <img src="{{ user.profile.image.url }}" class="rounded-circle" style="height:300px;"/>
     </div>
     {% else %}
     <div class="col-6 col-md-6 col-xl-4">
-      <img src="/media/empty.jpg" style="height:300px;width:250px;"/>
+      <img src="/media/empty.jpg" class="rounded-circle" style="height:300px;"/>
     </div>
     {% endif %}
     <div class="col">

@@ -20,9 +20,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'index' %}">
-              Home
-            </a>
             <div class="nav-item dropdown">
               <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
                 Courses
@@ -65,7 +62,7 @@
     <div class="container">
       <div class="jumbotron">
         {% block title %}
-          {% if title %}<h1 style="text-align:center;">{{ title }}</h1>{% endif %}
+          {% if title %}<h1 class="text-center">{{ title }}</h1>{% endif %}
           <p></p>
         {% endblock %}
         {% block messages %}

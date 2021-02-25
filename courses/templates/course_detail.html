@@ -6,11 +6,11 @@
   <div class="row">
       {% if course.image %}
       <div class="col-xl-6">
-        <img src="{{ course.image.url }}" style="height:350px;max-width:500px;"/>
+        <img src="{{ course.image.url }}" class="rounded" style="height:350px;max-width:500px;"/>
       </div>
       {% else %}
       <div class="col-xl-6">
-        <img src="/media/empty.jpg" style="height:350px;max-width:500px;"/>
+        <img src="/media/empty.jpg" class="rounded" style="height:350px;max-width:500px;"/>
       </div>
       {% endif %}
       <div class="col">
