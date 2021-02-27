@@ -1,6 +1,6 @@
 from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey,\
-    DO_NOTHING, FloatField, FileField, ImageField
-
+    DO_NOTHING, FloatField, FileField, ImageField, ManyToManyField
+from django.contrib.auth.models import User
 
 class Technology(Model):
     name = CharField(max_length=32)
@@ -20,6 +20,7 @@ class Course(Model):
     file = FileField(null=True, blank=True)
     remote = BooleanField()
     image = ImageField(null=True, blank=True)
+    students = ManyToManyField(User, related_name='courses_joined', blank=True)
 
     def __str__(self):
         return self.title
