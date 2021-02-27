@@ -2,10 +2,11 @@ from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.layout import Submit
 
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
-from django.forms import Form, CharField, Textarea, ImageField, EmailField
+from django.forms import Form, CharField, Textarea, ImageField, EmailField, ModelChoiceField, HiddenInput
 from django.db.transaction import atomic
 
 from accounts.models import Profile
+from courses.models import Course
 
 
 class SubmittableForm(Form):
@@ -42,3 +43,7 @@ class SignUpForm(SubmittableForm, UserCreationForm):
         if commit:
             profile.save()
         return result
+
+
+class CourseEnrollForm(Form):
+    course = ModelChoiceField(queryset=Course.objects.all(), widget=HiddenInput)

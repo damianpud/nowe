@@ -2,6 +2,7 @@ from django.db.models import CharField, Model, IntegerField, TextField, DateFiel
     DO_NOTHING, FloatField, FileField, ImageField, ManyToManyField
 from django.contrib.auth.models import User
 
+
 class Technology(Model):
     name = CharField(max_length=32)
 

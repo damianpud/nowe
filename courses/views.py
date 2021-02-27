@@ -17,6 +17,8 @@ from django.contrib import messages
 from django.utils.html import escape
 from django.utils.safestring import SafeString
 
+from accounts.forms import CourseEnrollForm
+
 
 def courses(request):
     return render(
@@ -67,6 +69,11 @@ class CourseDetailView(TitleMixin, LoginRequiredMixin, DetailView):
     title = 'Detail'
     template_name = 'course_detail.html'
     model = Course
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context['enroll_form'] = CourseEnrollForm(initial={'course': self.object})
+        return context
 
 
 class CourseCreateView(TitleMixin, SuccessMessagedFormMixin, PermissionRequiredMixin, CreateView):

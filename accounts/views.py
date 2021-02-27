@@ -3,12 +3,18 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
+from django.views.generic.edit import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.html import escape
+from django.utils.safestring import SafeString
 
+from courses.models import Course
 from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
-from accounts.forms import (
+from .forms import (
     SubmittableAuthenticationForm,
     SubmittablePasswordChangeForm,
-    SignUpForm
+    SignUpForm,
+    CourseEnrollForm
 )
 
 
@@ -52,3 +58,28 @@ class SignUpView(TitleMixin, SuccessMessagedFormMixin, CreateView):
 class ProfileView(TitleMixin, TemplateView):
     title = 'Profile'
     template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        result = super().get_context_data(**kwargs)
+        courses = Course.objects.get_queryset().filter(students__in=[self.request.user])
+        if courses is not None:
+            result['courses'] = courses
+        return result
+
+
+class StudentEnrollCourseView(LoginRequiredMixin, SuccessMessagedFormMixin, FormView):
+    course = None
+    form_class = CourseEnrollForm
+    success_message = None
+
+    def form_valid(self, form):
+        self.course = form.cleaned_data['course']
+        self.course.students.add(self.request.user)
+        safe_title = escape(self.course)
+        self.success_message = SafeString(
+            f'Congratulations you have successfully enrolled the <strong>{safe_title}</strong> course!'
+        )
+        return super(StudentEnrollCourseView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('index')

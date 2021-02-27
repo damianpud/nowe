@@ -5,7 +5,8 @@ from accounts.views import (
     SubmittablePasswordChangeView,
     SuccessMessagedLogoutView,
     SignUpView,
-    ProfileView
+    ProfileView,
+    StudentEnrollCourseView
 )
 
 
@@ -15,5 +16,6 @@ urlpatterns = [
     path('logout/', SuccessMessagedLogoutView.as_view(), name='logout'),
     path('password-change/', SubmittablePasswordChangeView.as_view(), name='password_change'),
     path('sign-up/', SignUpView.as_view(), name='sign_up'),
-    path('profile/', ProfileView.as_view(), name='profile')
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('enroll-course', StudentEnrollCourseView.as_view(), name='student_enroll_course')
 ]
