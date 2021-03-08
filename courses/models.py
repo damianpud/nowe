@@ -1,6 +1,9 @@
 from django.db.models import CharField, Model, IntegerField, TextField, DateField, BooleanField, ForeignKey,\
-    DO_NOTHING, FloatField, FileField, ImageField, ManyToManyField, CASCADE
+    DO_NOTHING, FloatField, FileField, ImageField, ManyToManyField, CASCADE, PositiveIntegerField, DateTimeField, \
+    URLField
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class Technology(Model):
@@ -34,3 +37,41 @@ class Module(Model):
 
     def __str__(self):
         return self.title
+
+
+class Content(Model):
+    module = ForeignKey(Module, related_name='contents', on_delete=DO_NOTHING)
+    content_type = ForeignKey(ContentType,
+                              limit_choices_to={'model__in': ('text', 'video', 'image', 'file')},
+                              on_delete=DO_NOTHING)
+    object_id = PositiveIntegerField()
+    item = GenericForeignKey('content_type', 'object_id')
+
+
+class ItemBase(Model):
+    owner = ForeignKey(User, related_name='%(class)s_related', on_delete=CASCADE)
+    title = CharField(max_length=250)
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.title
+
+
+class Text(ItemBase):
+    content = TextField()
+
+
+class File(ItemBase):
+    file = FileField(upload_to='files')
+
+
+class Image(ItemBase):
+    file = ImageField(upload_to='images')
+
+
+class Video(ItemBase):
+    url = URLField()
