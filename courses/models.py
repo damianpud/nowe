@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+from .fields import OrderField
+
 
 class Technology(Model):
     name = CharField(max_length=32)
@@ -31,21 +33,29 @@ class Course(Model):
 
 
 class Module(Model):
-    course = ForeignKey(Course, on_delete=CASCADE)
+    course = ForeignKey(Course, related_name='modules', on_delete=CASCADE)
     title = CharField(max_length=256)
     description = TextField(null=True, blank=True)
+    order = OrderField(null=True, blank=True, for_fields=['course'])
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
-        return self.title
+        return f'{self.order}. {self.title}'
 
 
 class Content(Model):
-    module = ForeignKey(Module, related_name='contents', on_delete=DO_NOTHING)
+    module = ForeignKey(Module, related_name='contents', on_delete=CASCADE)
     content_type = ForeignKey(ContentType,
                               limit_choices_to={'model__in': ('text', 'video', 'image', 'file')},
-                              on_delete=DO_NOTHING)
+                              on_delete=CASCADE)
     object_id = PositiveIntegerField()
     item = GenericForeignKey('content_type', 'object_id')
+    order = OrderField(null=True, blank=True, for_fields=['module'])
+
+    class Meta:
+        ordering = ['order']
 
 
 class ItemBase(Model):
