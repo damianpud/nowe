@@ -1,1 +1,1 @@
-Exercise with Django & Django Rest Framework
+My exercise with Django & Django Rest Framework based on "Django 3 By Example" A.Mele
