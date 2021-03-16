@@ -16,6 +16,7 @@ class Technology(Model):
 
 
 class Course(Model):
+    owner = ForeignKey(User, related_name='courses_created', on_delete=CASCADE)
     title = CharField(max_length=128)
     technology = ForeignKey(Technology, on_delete=DO_NOTHING)
     description = TextField(null=True, blank=True)
