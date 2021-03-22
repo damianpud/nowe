@@ -69,7 +69,7 @@ class CourseForm(ModelForm):
 
     class Meta:
         model = Course
-        exclude = []
+        exclude = ['owner']
 
     title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
@@ -93,5 +93,3 @@ class CourseForm(ModelForm):
         cleaned = truncate(initial, 2)
         self.cleaned_data['price'] = cleaned
         return cleaned
-
-
