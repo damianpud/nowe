@@ -65,7 +65,39 @@ class CourseListView(TitleMixin, ListView):
     paginate_by = 5
 
 
-class CourseDetailView(TitleMixin, LoginRequiredMixin, DetailView):
+class OwnerMixin(object):
+    def get_queryset(self):
+        qs = super(OwnerMixin, self).get_queryset()
+        return qs.filter(owner=self.request.user)
+
+
+class OwnerEditMixin(object):
+    def form_valid(self, form):
+        course = form.save(commit=False)
+        form.instance.owner = self.request.user
+        course.save()
+        return super(OwnerEditMixin, self).form_valid(form)
+
+
+class OwnerCourseMixin(OwnerMixin):
+    model = Course
+
+
+class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
+    template_name = 'form.html'
+    form_class = CourseForm
+    success_url = reverse_lazy('index')
+
+
+class OwnerCourseListView(OwnerCourseMixin,
+                          ListView):
+    template_name = 'course_list.html'
+    paginate_by = 5
+
+
+class CourseDetailView(TitleMixin,
+                       LoginRequiredMixin,
+                       DetailView):
     title = 'Detail'
     template_name = 'course_detail.html'
     model = Course
@@ -76,11 +108,12 @@ class CourseDetailView(TitleMixin, LoginRequiredMixin, DetailView):
         return context
 
 
-class CourseCreateView(TitleMixin, SuccessMessagedFormMixin, PermissionRequiredMixin, CreateView):
+class CourseCreateView(TitleMixin,
+                       SuccessMessagedFormMixin,
+                       PermissionRequiredMixin,
+                       OwnerCourseEditMixin,
+                       CreateView):
     title = 'Create course'
-    template_name = 'form.html'
-    form_class = CourseForm
-    success_url = reverse_lazy('index')
     permission_required = 'courses.add_course'
 
     def get_success_message(self):
@@ -89,12 +122,13 @@ class CourseCreateView(TitleMixin, SuccessMessagedFormMixin, PermissionRequiredM
         return SafeString(f'Course <strong>{safe_title} {safe_technology}</strong> added!')
 
 
-class CourseUpdateView(TitleMixin, StaffRequiredMixin, SuccessMessagedFormMixin, PermissionRequiredMixin, UpdateView):
+class CourseUpdateView(TitleMixin,
+                       StaffRequiredMixin,
+                       SuccessMessagedFormMixin,
+                       PermissionRequiredMixin,
+                       OwnerCourseEditMixin,
+                       UpdateView):
     title = 'Update course'
-    template_name = 'form.html'
-    model = Course
-    form_class = CourseForm
-    success_url = reverse_lazy('index')
     permission_required = 'courses.change_course'
 
     def get_success_message(self):
@@ -103,7 +137,11 @@ class CourseUpdateView(TitleMixin, StaffRequiredMixin, SuccessMessagedFormMixin,
         return SafeString(f'Course <strong>{safe_title} {safe_technology}</strong> updated!')
 
 
-class CourseDeleteView(TitleMixin, StaffRequiredMixin, PermissionRequiredMixin, DeleteView):
+class CourseDeleteView(TitleMixin,
+                       StaffRequiredMixin,
+                       PermissionRequiredMixin,
+                       OwnerCourseMixin,
+                       DeleteView):
     title = 'Confirm delete course'
     template_name = 'course_confirm_delete.html'
     model = Course
