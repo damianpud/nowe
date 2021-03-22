@@ -22,7 +22,7 @@
     </div>
   </div>
   <p></p>
-  <p style="text-align:center"><b>Your courses</b></p>
+  <p style="text-align:center"><b>Courses you have enrolled</b></p>
   <p></p>
   {% for course in courses %}
     <div class="row">
@@ -43,6 +43,9 @@
     </div>
     <p></p>
   {% endfor %}
-
-
+  <div>
+    <a href="{% url 'courses:owner_courses_list' %}" class="text-dark">
+      <p style="text-align:center"><b>Your own courses</b></p>
+    </a>
+  </div>
 {% endblock %}
