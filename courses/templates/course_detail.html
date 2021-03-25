@@ -6,12 +6,12 @@
 
   <div class="row">
       {% if course.image %}
-      <div class="col-xl-6">
-        <img src="{{ course.image.url }}" class="rounded" style="height:350px;max-width:500px;"/>
+      <div class="col-md-8 col-lg-6 col-xl-6">
+        <img src="{{ course.image.url }}" class="rounded img-fluid" style="height:300px;"/>
       </div>
       {% else %}
-      <div class="col-xl-6">
-        <img src="/media/empty.jpg" class="rounded" style="height:350px;max-width:500px;"/>
+      <div class="col-md-8 col-lg-6 col-xl-6">
+        <img src="/media/empty.jpg" class="rounded img-fluid" style="height:300px;"/>
       </div>
       {% endif %}
       <div class="col">
@@ -33,7 +33,7 @@
   <form action="{% url 'accounts:student_enroll_course' %}" method="post">
       {{ enroll_form }}
       {% csrf_token %}
-      <input type="submit" class="btn btn-outline-success" value="Enroll">
+      <input type="submit" class="btn btn-outline-success float-right" value="Enroll">
   </form>
 
 {% endblock %}
