@@ -9,7 +9,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework_xml.renderers import XMLRenderer
 
-from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
@@ -18,13 +17,6 @@ from django.utils.html import escape
 from django.utils.safestring import SafeString
 
 from accounts.forms import CourseEnrollForm
-
-
-def courses(request):
-    return render(
-        request, template_name='courses.html',
-        context={'courses': Course.objects.all().order_by('price')}
-    )
 
 
 class TechnologyViewSet(ModelViewSet):
@@ -48,21 +40,9 @@ class CourseViewSet(ModelViewSet):
         return super().get_serializer_class()
 
 
-class CourseView(ListView):
-    template_name = 'courses.html'
-    model = Course
-
-
 class StaffRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff
-
-
-class CourseListView(TitleMixin, ListView):
-    title = 'Courses list'
-    template_name = 'course_list.html'
-    model = Course
-    paginate_by = 5
 
 
 class OwnerMixin(object):
@@ -89,8 +69,15 @@ class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
     success_url = reverse_lazy('index')
 
 
-class OwnerCourseListView(OwnerCourseMixin,
-                          ListView):
+class CourseListView(TitleMixin, ListView):
+    title = 'Courses list'
+    template_name = 'course_list.html'
+    model = Course
+    paginate_by = 5
+
+
+class OwnerCourseListView(TitleMixin, OwnerCourseMixin, ListView):
+    title = 'Your courses'
     template_name = 'course_list.html'
     paginate_by = 5
 
