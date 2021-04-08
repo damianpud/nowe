@@ -1,5 +1,5 @@
 from courses.models import Course, Technology
-from courses.forms import CourseForm
+from courses.forms import CourseForm, ModuleFormSet
 from courses.serializers import TechnologySerializer, CourseSerializer, CourseShortSerializer
 
 from sdaworld.mixins import TitleMixin, SuccessMessagedFormMixin
@@ -10,6 +10,8 @@ from rest_framework.views import APIView
 from rest_framework_xml.renderers import XMLRenderer
 
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.base import TemplateResponseMixin, View
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
@@ -76,7 +78,9 @@ class CourseListView(TitleMixin, ListView):
     paginate_by = 5
 
 
-class OwnerCourseListView(TitleMixin, OwnerCourseMixin, ListView):
+class OwnerCourseListView(TitleMixin,
+                          OwnerCourseMixin,
+                          ListView):
     title = 'Your courses'
     template_name = 'course_list.html'
     paginate_by = 5
@@ -149,3 +153,27 @@ class CourseDeleteView(TitleMixin,
         message = SafeString(f'Course <strong>{safe_title} {safe_technology}</strong> removed.')
         messages.success(request, message)
         return result
+
+
+class CourseModuleUpdateView(TemplateResponseMixin, View):
+
+    template_name = 'formset.html'
+    course = None
+
+    def get_formset(self, data=None):
+        return ModuleFormSet(instance=self.course, data=data)
+
+    def dispatch(self, request, pk):
+        self.course = get_object_or_404(Course, id=pk, owner=request.user)
+        return super().dispatch(request, pk)
+
+    def get(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        return self.render_to_response({'course': self.course, 'formset': formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = self.get_formset(data=request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('courses:owner_courses_list')
+        return self.render_to_response({'course': self.course, 'formset': formset})
