@@ -4,11 +4,12 @@ from datetime import date
 from django.forms import CharField, DateField, IntegerField, FloatField, ModelChoiceField, Textarea, BooleanField,\
     ModelForm, FileField
 from django.core.exceptions import ValidationError
+from django.forms.models import inlineformset_factory
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Layout, Row, Submit, Button
 
-from courses.models import Technology, Course
+from courses.models import Technology, Course, Module
 
 import math
 from pathlib import Path
@@ -93,3 +94,10 @@ class CourseForm(ModelForm):
         cleaned = truncate(initial, 2)
         self.cleaned_data['price'] = cleaned
         return cleaned
+
+
+ModuleFormSet = inlineformset_factory(Course,
+                                      Module,
+                                      fields=['title', 'description'],
+                                      extra=2,
+                                      can_delete=True)
