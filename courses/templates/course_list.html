@@ -4,38 +4,36 @@
 
 {% block content %}
 
-  <ul>
     {% for course in page_obj %}
-        <div class="row">
-        {% if course.image %}
-          <div class="col-6 col-md-3 col-lg-2">
-            <img src="{{ course.image.url }}" class="rounded" style="height:100px;width:150px;"/>
-          </div>
-        {% else %}
-          <div class="col-6 col-md-3 col-lg-2">
-            <img src="/media/empty.jpg" class="rounded" style="height:100px;width:150px;"/>
-          </div>
-        {% endif %}
-          <div class="col-3 col-md-4 col-lg-7">
-            <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
-              {% course_format course short=True %}
-            </a>
-          </div>
-          <div class="col">
-            <a class="btn btn-outline-success" type="button" href="{% url 'courses:course_module_update' course.pk %}">
-              Edit modules
-            </a>
-            <a class="btn btn-outline-secondary" type="button" href="{% url 'courses:course_update' course.pk %}">
-              Update
-            </a>
-            <a class="btn btn-outline-danger" type="button" href="{% url 'courses:course_delete' course.pk %}">
-              Delete
-            </a>
-          </div>
-        </div>
-        <p></p>
+         <div class="row">
+           {% if course.image %}
+             <div class="col-6 col-md-3 col-lg-2">
+               <img src="{{ course.image.url }}" class="rounded" style="height:100px;width:150px;"/>
+             </div>
+           {% else %}
+             <div class="col-6 col-md-3 col-lg-2">
+               <img src="/media/empty.jpg" class="rounded" style="height:100px;width:150px;"/>
+             </div>
+           {% endif %}
+           <div class="col-3 col-md-4 col-lg-7">
+             <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
+               {% course_format course short=True %}
+             </a>
+           </div>
+           <div class="col">
+             <a class="btn btn-outline-success float-right" type="button" href="{% url 'courses:course_module_update' course.pk %}">
+               Edit modules
+             </a>
+             <a class="btn btn-outline-secondary float-right" type="button" href="{% url 'courses:course_update' course.pk %}">
+               Update
+             </a>
+             <a class="btn btn-outline-danger float-right" type="button" href="{% url 'courses:course_delete' course.pk %}">
+               Delete
+             </a>
+           </div>
+         </div>
+         <p></p>
     {% endfor %}
-  </ul>
 
   <nav aria-label="Page navigation example">
     <ul class="pagination">
