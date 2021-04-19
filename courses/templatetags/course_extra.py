@@ -23,3 +23,11 @@ def attr_as_p(obj, attrname):
     elif label == 'Price':
         return SafeString(f'<p><strong>{label}:</strong> {value} PLN</p>')
     return SafeString(f'<p><strong>{label}:</strong> {value}</p>')
+
+
+@register.filter
+def model_name(obj):
+    try:
+        return obj._meta.model_name
+    except AttributeError:
+        return None
