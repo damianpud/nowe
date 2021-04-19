@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 from courses.views import CourseCreateView, CourseDetailView, CourseUpdateView, CourseDeleteView,\
     CourseListView, TechnologyViewSet, CourseViewSet, OwnerCourseListView, CourseModuleUpdateView,\
-    ContentCreateUpdateView, ContentDeleteView
+    ContentCreateUpdateView, ContentDeleteView, ModuleContentListView
 
 router = DefaultRouter()
 router.register('technology', TechnologyViewSet)
@@ -26,5 +26,6 @@ urlpatterns = [
          ContentCreateUpdateView.as_view(),
          name='module_content_update'),
     path('content/<int:id>/delete', ContentDeleteView.as_view(), name='module_content_delete'),
+    path('module/<int:module_id>', ModuleContentListView.as_view(), name='module_content_list'),
     path('api/', include(router.urls))
 ]
