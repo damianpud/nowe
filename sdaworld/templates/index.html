@@ -5,7 +5,7 @@
 
 {% block styles %}
   {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/index_style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/courses_style.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -13,25 +13,25 @@
   {% for course in page_obj %}
   <div class="row">
       {% if course.image %}
-      <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
-      <div class="col-6 col-md-3 col-lg-2">
-        <img src="{{ course.image.url }}" class="rounded"/>
-        <p></p>
-      </div>
-      </a>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="{% url 'courses:course_detail' course.pk %}">
+              <img src="{{ course.image.url }}" class="rounded"/>
+            </a>
+            <p></p>
+        </div>
       {% else %}
-      <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
-      <div class="col-6 col-md-3 col-lg-2">
-        <img src="/media/empty.jpg" class="rounded"/>
-        <p></p>
-      </div>
-      </a>
+        <div class="col-6 col-md-3 col-lg-2">
+            <a href="{% url 'courses:course_detail' course.pk %}">
+              <img src="/media/empty.jpg" class="rounded"/>
+            </a>
+            <p></p>
+        </div>
       {% endif %}
-      <div class="col">
-        <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
-        {% course_format course %}
-        </a>
-      </div>
+        <div class="col">
+          <a href="{% url 'courses:course_detail' course.pk %}" class="text-dark">
+          {% course_format course %}
+          </a>
+        </div>
   </div>
   {% endfor %}
 

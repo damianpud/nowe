@@ -1,0 +1,12 @@
+img {
+    height:100px;
+    width:150px;
+}
+
+img:hover {
+    background-repeat: no-repeat;
+    opacity: 0.80;
+    filter: alpha(opacity=80);
+    height: 102px;
+    width: 152px;
+}

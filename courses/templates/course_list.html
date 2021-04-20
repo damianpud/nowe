@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% load course_extra %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/courses_style.css' %}" />
+{% endblock %}
 
 {% block content %}
 
@@ -9,13 +15,13 @@
            {% if course.image %}
                <div class="col-6 col-md-3 col-lg-2">
                  <a href="{% url 'courses:course_detail' course.pk %}">
-                   <img src="{{ course.image.url }}" class="rounded" style="height:100px;width:150px;"/>
+                   <img src="{{ course.image.url }}" class="rounded"/>
                  </a>
                </div>
            {% else %}
                <div class="col-6 col-md-3 col-lg-2">
                  <a href="{% url 'courses:course_detail' course.pk %}">
-                   <img src="/media/empty.jpg" class="rounded" style="height:100px;width:150px;"/>
+                   <img src="/media/empty.jpg" class="rounded"/>
                  </a>
                </div>
            {% endif %}
