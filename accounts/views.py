@@ -18,14 +18,18 @@ from .forms import (
 )
 
 
-class SubmittableLoginView(TitleMixin, SuccessMessagedFormMixin, LoginView):
+class SubmittableLoginView(TitleMixin,
+                           SuccessMessagedFormMixin,
+                           LoginView):
     title = 'Login'
     success_message = 'You are successfully logged in!'
     form_class = SubmittableAuthenticationForm
     template_name = 'form.html'
 
 
-class SubmittablePasswordChangeView(TitleMixin, SuccessMessagedFormMixin, PasswordChangeView):
+class SubmittablePasswordChangeView(TitleMixin,
+                                    SuccessMessagedFormMixin,
+                                    PasswordChangeView):
     title = 'Password Change'
     success_message = 'Password successfully changed!'
     form_class = SubmittablePasswordChangeForm
@@ -40,7 +44,9 @@ class SuccessMessagedLogoutView(LogoutView):
         return result
 
 
-class SignUpView(TitleMixin, SuccessMessagedFormMixin, CreateView):
+class SignUpView(TitleMixin,
+                 SuccessMessagedFormMixin,
+                 CreateView):
     title = 'Sign up'
     success_message = 'You are successfully sign in!'
     form_class = SignUpForm
@@ -48,7 +54,7 @@ class SignUpView(TitleMixin, SuccessMessagedFormMixin, CreateView):
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        result = super(SignUpView, self).form_valid(form)
+        result = super().form_valid(form)
         cd = form.cleaned_data
         user = authenticate(username=cd['username'], password=cd['password1'])
         login(self.request, user)
@@ -67,7 +73,9 @@ class ProfileView(TitleMixin, TemplateView):
         return result
 
 
-class StudentEnrollCourseView(LoginRequiredMixin, SuccessMessagedFormMixin, FormView):
+class StudentEnrollCourseView(LoginRequiredMixin,
+                              SuccessMessagedFormMixin,
+                              FormView):
     course = None
     form_class = CourseEnrollForm
     success_message = None
@@ -79,7 +87,7 @@ class StudentEnrollCourseView(LoginRequiredMixin, SuccessMessagedFormMixin, Form
         self.success_message = SafeString(
             f'Congratulations you have successfully enrolled the <strong>{safe_title}</strong> course!'
         )
-        return super(StudentEnrollCourseView, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('index')
