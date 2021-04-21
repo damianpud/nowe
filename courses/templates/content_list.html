@@ -1,49 +1,56 @@
 {% extends "base.html" %}
 
+{% load bootstrap4 %}
 {% load course_extra %}
 
 {% block content %}
 
 {% with course=module.course %}
-    <div>
-        {% for m in course.modules.all %}
-            <li data-id="{{ m.id }}" {% if m == module %} class="selected" {% endif %}>
-                <a href="{% url 'courses:module_content_list' m.id %}">
-                    <span>
-                        Moduł <span class="order"> {{ m.order|add:1 }}</span>
-                    </span>
-                    <br> {{ m.title }}
-                </a>
-            </li>
-        {% empty %}
-        <li>No modules.</li>
-        {% endfor %}
-        <p><a type="button" class="btn btn-primary" href="{% url 'courses:course_module_update' course.id %}">Edit modules</a></p>
-    </div>
-    <div>
-        <div>
-            {% for content in module.conetnts.all %}
-            <div data-id="{{ content.id }}">
-                {% with item=content.item %}
-                    <p>{{ item }} ({{ item|model_name }})</p>
-                    <a href="{% url 'courses:module_content_update' module.id item|model_name item.id %}">Edit</a>
-                    <form action="{% url 'courses:module_content_delete' content.id %}" method="post">
-                        <input type="submit" value="Delete">
-                        {% csrf_token %}
-                    </form>
-                {% endwith %}
-            </div>
+    <div class="row">
+        <div class="col-6 col-md-3 col-lg-2">
+            <h2>Modules</h2>
+            {% for m in course.modules.all %}
+                <span data-id="{{ m.id }}" {% if m == module %} class="selected" {% endif %}>
+                    <a href="{% url 'courses:module_content_list' m.id %}">
+                        <span class="text-dark">
+                            Moduł <span class="order"> {{ m.order|add:1 }}</span>
+                        </span>
+                        <br>
+                        <p class="text-dark">{{ m.title }}</p>
+                    </a>
+                </span>
             {% empty %}
-            <p>No content.</p>
+            <li>No modules.</li>
             {% endfor %}
+            <p><a type="button" class="btn btn-primary" href="{% url 'courses:course_module_update' course.id %}">Edit modules</a></p>
         </div>
-        <hr>
-        <h3>Add Content:</h3>
-        <div class="row">
-            <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'text' %}">Text</a>
-            <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'image' %}">Image</a>
-            <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'video' %}">Video</a>
-            <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'file' %}">File</a>
+        <div class="col">
+            <h3>Module {{ module.order|add:1 }}: {{ module.title }}</h3>
+            <h4>Module content:</h4>
+            <div>
+                {% for content in module.contents.all %}
+                <div data-id="{{ content.id }}">
+                    {% with item=content.item %}
+                        <p>{{ item }} ({{ item|model_name }})</p>
+                        <a class="btn btn-primary btn-sm" href="{% url 'courses:module_content_update' module.id item|model_name item.id %}">Edit</a>
+                        <form action="{% url 'courses:module_content_delete' content.id %}" method="post">
+                            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                            {% csrf_token %}
+                        </form>
+                    {% endwith %}
+                </div>
+                {% empty %}
+                    <p>No content.</p>
+                {% endfor %}
+            </div>
+            <hr>
+            <h5>Add Content:</h5>
+            <div class="row">
+                <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'text' %}">Text</a>
+                <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'image' %}">Image</a>
+                <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'video' %}">Video</a>
+                <a class="btn btn-secondary active" type="button" href="{% url 'courses:module_content_create' module.id 'file' %}">File</a>
+            </div>
         </div>
     </div>
 {% endwith %}
