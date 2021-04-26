@@ -16,6 +16,7 @@ from django.urls import reverse_lazy
 from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.utils.text import slugify
 from django.utils.html import escape
 from django.utils.safestring import SafeString
 from django.forms.models import modelform_factory
@@ -114,6 +115,13 @@ class CourseCreateView(TitleMixin,
         safe_technology = escape(self.object.technology)
         return SafeString(f'Course <strong>{safe_title} {safe_technology}</strong> added!')
 
+    def form_valid(self, form):
+        course = form.save(commit=False)
+        course.slug = slugify(str(f'{course.pk}-') + course.title)
+        course.owner = self.request.user
+        course.save()
+        return super().form_valid(form)
+
 
 class CourseUpdateView(TitleMixin,
                        StaffRequiredMixin,
@@ -128,6 +136,12 @@ class CourseUpdateView(TitleMixin,
         safe_title = escape(self.object.title)
         safe_technology = escape(self.object.technology)
         return SafeString(f'Course <strong>{safe_title} {safe_technology}</strong> updated!')
+
+    def form_valid(self, form):
+        course = form.save(commit=False)
+        course.slug = slugify(str(f'{course.pk}-') + course.title)
+        course.save()
+        return super().form_valid(form)
 
 
 class CourseDeleteView(TitleMixin,

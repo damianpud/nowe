@@ -17,7 +17,7 @@ urlpatterns = [
     path('create', CourseCreateView.as_view(), name='course_create'),
     path('update/<pk>', CourseUpdateView.as_view(), name='course_update'),
     path('delete/<pk>', CourseDeleteView.as_view(), name='course_delete'),
-    path('detail/<pk>', CourseDetailView.as_view(), name='course_detail'),
+    path('detail/<slug:slug>', CourseDetailView.as_view(), name='course_detail'),
     path('<pk>/module', CourseModuleUpdateView.as_view(), name='course_module_update'),
     path('module/<int:module_id>/content/<model_name>/create/',
          ContentCreateUpdateView.as_view(),

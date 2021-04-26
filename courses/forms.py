@@ -70,7 +70,7 @@ class CourseForm(ModelForm):
 
     class Meta:
         model = Course
-        exclude = ['owner']
+        exclude = ['owner', 'slug']
 
     title = CharField(validators=[capitalized_validator])
     technology = ModelChoiceField(queryset=Technology.objects)
