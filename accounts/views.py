@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.html import escape
@@ -61,7 +61,7 @@ class SignUpView(TitleMixin,
         return result
 
 
-class ProfileView(TitleMixin, TemplateView):
+class ProfileView(TitleMixin, LoginRequiredMixin, TemplateView):
     title = 'Profile'
     template_name = 'profile.html'
 
@@ -91,3 +91,21 @@ class StudentEnrollCourseView(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse_lazy('index')
+
+
+class StudentCourseDetailView(LoginRequiredMixin, DetailView):
+    model = Course
+    template_name = 'student_course_detail.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(students__in=[self.request.user])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        course = self.get_object()
+        if 'module_id' in self.kwargs:
+            context['module'] = course.modules.get(id=self.kwargs['module_id'])
+        else:
+            context['module'] = course.modules.all()[0]
+        return context
