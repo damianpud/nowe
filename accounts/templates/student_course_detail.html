@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load course_extra %}
+
+{% block content %}
+
+    <h1>{{ module.title }}</h1>
+    <div class="row">
+        <div class="col-6 col-md-3 col-lg-2">
+            {% for m in object.modules.all %}
+                <p data-id="{{ m.id }}" {% if m == module %} class="selected" {% endif %}>
+                    <a href="{% url 'accounts:student_course_detail_module' object.slug m.id %}" class="text-dark">
+                        <span>
+                            Module <span>{{ m.order|add:1 }}</span>
+                        </span>
+                        <br>
+                        {{ m.title }}
+                    </a>
+                </p>
+            {% empty %}
+                <p>No modules.</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            {% for content in module.contents.all %}
+                {% with item=content.item %}
+                    <h2>{{ item.title }}</h2>
+                    {{ item.render }}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
