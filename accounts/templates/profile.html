@@ -36,7 +36,7 @@
       </div>
       {% endif %}
       <div class="col">
-        <a href="{% url 'courses:course_detail' course.slug %}" class="text-dark">
+        <a href="{% url 'accounts:student_course_detail' course.slug %}" class="text-dark">
         {% course_format course short=True %}
         </a>
       </div>
