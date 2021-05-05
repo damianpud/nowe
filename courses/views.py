@@ -89,15 +89,13 @@ class OwnerCourseListView(TitleMixin,
     paginate_by = 5
 
 
-class CourseDetailView(TitleMixin,
-                       LoginRequiredMixin,
-                       DetailView):
+class CourseDetailView(TitleMixin, DetailView):
     title = 'Detail'
     template_name = 'course_detail.html'
     model = Course
 
     def get_context_data(self, **kwargs):
-        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['enroll_form'] = CourseEnrollForm(initial={'course': self.object})
         return context
 
