@@ -90,9 +90,12 @@ class OwnerCourseListView(TitleMixin,
 
 
 class CourseDetailView(TitleMixin, DetailView):
-    title = 'Detail'
     template_name = 'course_detail.html'
     model = Course
+
+    def get_title(self):
+        safe_title = escape(self.object.title)
+        return SafeString(f'{safe_title}')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -115,8 +118,9 @@ class CourseCreateView(TitleMixin,
 
     def form_valid(self, form):
         course = form.save(commit=False)
-        course.slug = slugify(str(f'{course.pk}-') + course.title)
         course.owner = self.request.user
+        course.save()
+        course.slug = slugify(str(f'{course.pk}-') + course.title)
         course.save()
         return super().form_valid(form)
 
